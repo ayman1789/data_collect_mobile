@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة إدخال بيانات (مخصصة للجوال)</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #1a1a1a, #b8860b);
+            color: #fff;
+            display: block;
+            height: 100%;
+            margin: 0;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .data-entry-form, .data-table {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        .data-entry-form h2, .data-table h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #b8860b;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #222;
+            color: #fff;
+            font-size: 1em;
+        }
+        .form-group input[type="submit"], .form-group input[type="button"] {
+            background-color: #b8860b;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .form-group input[type="button"] {
+            background-color: #ff4c4c;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #d4a017;
+        }
+        .form-group input[type="button"]:hover {
+            background-color: #ff1f1f;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #555;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #b8860b;
+        }
+        .charts-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .chart-wrapper {
+            background: #333;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="data-entry-form">
+            <h2>إدخال البيانات</h2>
+            <form id="dataForm">
+                <div class="form-group">
+                    <label for="name">الاسم:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">العمر:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">الجنس:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">اختر الجنس</option>
+                        <option value="ذكر">ذكر</option>
+                        <option value="أنثى">أنثى</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="degree">المؤهل الجامعى:</label>
+                    <select id="degree" name="degree" required>
+                        <option value="">اختر المؤهل</option>
+                        <option value="جامعى">جامعى</option>
+                        <option value="ماستر">ماستر</option>
+                        <option value="دكتوراة">دكتوراة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location">مكان السكن:</label>
+                    <select id="location" name="location" required>
+                        <option value="">اختر المحافظة</option>
+                        <option value="القاهرة">القاهرة</option>
+                        <option value="الجيزة">الجيزة</option>
+                        <option value="الإسكندرية">الإسكندرية</option>
+                        <option value="الشرقية">الشرقية</option>
+                        <option value="الدقهلية">الدقهلية</option>
+                        <option value="البحيرة">البحيرة</option>
+                        <option value="المنوفية">المنوفية</option>
+                        <option value="الغربية">الغربية</option>
+                        <option value="القليوبية">القليوبية</option>
+                        <option value="أسوان">أسوان</option>
+                        <option value="أسيوط">أسيوط</option>
+                        <option value="الأقصر">الأقصر</option>
+                        <option value="الفيوم">الفيوم</option>
+                        <option value="قنا">قنا</option>
+                        <option value="سوهاج">سوهاج</option>
+                        <option value="بنى سويف">بنى سويف</option>
+                        <option value="بورسعيد">بورسعيد</option>
+                        <option value="السويس">السويس</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="إرسال البيانات">
+                    <input type="button" id="clearData" value="مسح كل البيانات">
+                </div>
+            </form>
+        </div>
+        <div class="data-table">
+            <h2>بيانات المستخدمين</h2>
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>العمر</th>
+                        <th>الجنس</th>
+                        <th>المؤهل</th>
+                        <th>مكان السكن</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <canvas id="genderChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="locationChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <canvas id="degreeChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const userTable = document.getElementById('userTable').querySelector('tbody');
+        const genderStats = { "ذكر": 0, "أنثى": 0 };
+        const locationStats = {};
+        const degreeStats = { "جامعى": 0, "ماستر": 0, "دكتوراة": 0 };
+
+        // Load data from local storage if available
+        window.addEventListener('load', function() {
+            const savedUsers = JSON.parse(localStorage.getItem('users')) || [];
+            savedUsers.forEach(user => {
+                addUserRow(user);
+                updateStats(user);
+            });
+            displayCharts();
+        });
+
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const degree = document.getElementById('degree').value;
+            const location = document.getElementById('location').value;
+
+            const user = { name, age, gender, degree, location };
+            addUserRow(user);
+            updateStats(user);
+
+            // Save user data to local storage
+            const savedUsers = JSON.parse(localStorage.getItem('users')) || [];
+            savedUsers.push(user);
+            localStorage.setItem('users', JSON.stringify(savedUsers));
+
+            // Display charts
+            displayCharts();
+        });
+
+        document.getElementById('clearData').addEventListener('click', function() {
+            // Clear local storage
+            localStorage.removeItem('users');
+            // Clear table and reset stats
+            userTable.innerHTML = '';
+            Object.keys(genderStats).forEach(key => genderStats[key] = 0);
+            Object.keys(degreeStats).forEach(key => degreeStats[key] = 0);
+            for (let key in locationStats) {
+                delete locationStats[key];
+            }
+            // Refresh charts
+            displayCharts();
+        });
+
+        function addUserRow(user) {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${user.name}</td><td>${user.age}</td><td>${user.gender}</td><td>${user.degree}</td><td>${user.location}</td>`;
+            userTable.appendChild(row);
+        }
+
+        function updateStats(user) {
+            genderStats[user.gender]++;
+            degreeStats[user.degree]++;
+            locationStats[user.location] = (locationStats[user.location] || 0) + 1;
+        }
+
+        function displayCharts() {
+            const ctxGender = document.getElementById('genderChart').getContext('2d');
+            const ctxLocation = document.getElementById('locationChart').getContext('2d');
+            const ctxDegree = document.getElementById('degreeChart').getContext('2d');
+
+            new Chart(ctxGender, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(genderStats),
+                    datasets: [{
+                        data: Object.values(genderStats),
+                        backgroundColor: ['#b8860b', '#1a1a1a']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            new Chart(ctxLocation, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(locationStats),
+                    datasets: [{
+                        label: 'عدد المستخدمين حسب المحافظة',
+                        data: Object.values(locationStats),
+                        backgroundColor: '#b8860b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            new Chart(ctxDegree, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(degreeStats),
+                    datasets: [{
+                        data: Object.values(degreeStats),
+                        backgroundColor: ['#b8860b', '#1a1a1a', '#d4a017']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
